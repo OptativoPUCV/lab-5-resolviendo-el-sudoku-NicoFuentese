@@ -25,3 +25,14 @@ sudoku.c:108:5: error: suggest parentheses around assignment used as truth value
      ^~~
 cc1.exe: all warnings being treated as errors
 a09886e
+Sat, May 17, 2025 12:09:31 PM: 
+ sudoku.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Compilation failed
+In file included from test.c:5:0:
+sudoku.c: In function 'is_final':
+sudoku.c:108:5: error: suggest parentheses around assignment used as truth value [-Werror=parentheses]
+     for (int j = 0; j = 9; j++) {
+     ^~~
+cc1.exe: all warnings being treated as errors
+e59614c
