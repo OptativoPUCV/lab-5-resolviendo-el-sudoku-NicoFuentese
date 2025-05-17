@@ -114,55 +114,38 @@ int is_final(Node* n){
   return 1;
 }
 
-Node* DFS(Node* initial, int* cont){
-  return NULL;
-}
-/*
-Node* DFS(Node* initial, int* cont){
-  Stack* stack = createStack();
-  if (stack == NULL) {
-    if (cont != NULL) *cont = 0;
-    free(initial);
-    return NULL;
-  }
-
-  push(stack, initial);
+Node* DFS(Node* initial, int* cont) {
   if (cont != NULL) *cont = 0;
 
-  Node* current = NULL;
-  List* adj = NULL;
+  Stack* stack = createStack();
+  if (stack == NULL) return NULL;
+  push(stack, initial);
+  
+  while(!is_empty(stack)) {
+    Node* current = top(stack);
+    pop(stack);
 
-  while (!is_empty(stack)) {
-    current = top(stack);
-
-    if (cont != NULL) (*cont)++;
+    if(cont != NULL) (*cont)++;
 
     if (is_final(current)) {
-      if (is_valid(current)) {
-        clean(stack);
-        return current;
+      clean(stack);
+      return current;
+    }
+
+    List* adj = get_adj_nodes(current);
+    if ( adj != NULL) {
+      void* data = first(adj);
+      while (data != NULL) {
+        push(stack, data);
+        data = next(adj);
       }
+      clean(adj);
     }
-
-    adj = get_adj_nodes(current);
-    if (adj == NULL) {
-      pop(stack);
-      free(current);
-      return NULL;
-    }
-
-    void *it = first(adj);
-    while(it != NULL) {
-      push(stack, it);
-      it = next(adj);
-    }
-
     free(current);
-    clean(adj);
-    return NULL;
+  }
+  free(stack);
+  return NULL;
 }
-*/
-
 
 /*
 int main( int argc, char *argv[] ){
