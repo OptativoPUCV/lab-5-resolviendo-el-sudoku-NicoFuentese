@@ -113,7 +113,7 @@ int is_final(Node* n){
   }
   return 1;
 }
-
+/*
 Node* DFS(Node* initial, int* cont){
   Stack* stack = createStack();
   if (stack == NULL) {
@@ -157,7 +157,7 @@ Node* DFS(Node* initial, int* cont){
     clean(adj);
     return NULL;
 }
-
+*/
 
 
 /*
