@@ -44,13 +44,61 @@ void print_node(Node* n){
 }
 
 int is_valid(Node* n){
+    int i, j, k;
+    int fil[9][10] = {0};
+    int col[9][10] = {0};
+    int subMat[3][3][10] = {0};
 
-    return 1;
+    for (i = 0; i < 9; i++) {
+        for (j = 0; j < 9; j++) {
+            if (n -> sudo[i][j] != 0) {
+                k = n -> sudo[i][j];
+                if (fil[i][k] || col[j][k] || subMat[i / 3][j / 3][k]) {
+                    return 0;
+                }
+                fil[i][k] = col[j][k] = subMat[i / 3][j / 3][k] = 1; //asigno encadenadamente
+            }
+        }
+    }
+  return 1;
 }
 
 
 List* get_adj_nodes(Node* n){
     List* list=createList();
+    int filaVacia = -1;
+    int colVacia = -1;
+    int encontradoVacio = 0;
+
+    for (int i = 0; i < 9 && !encontradoVacio; i++) {
+        for (int j = 0; j < 9 && !encontradoVacio; j++) {
+            if (n->sudo[i][j] == 0) {
+                filaVacia = i;
+                colVacia = j;
+                encontradoVacio = 1;
+                break;
+            }
+        }
+        if (encontradoVacio) {
+            break;
+        }
+    }
+
+    if (filaVacia == -1 || colVacia == -1) { // Todas las casillas llenas
+        return list;
+    }
+
+    for(int i = 1; i <= 9; i++) {
+        Node* newNode = copy(n);
+        newNode->sudo[filaVacia][colVacia] = i;
+
+        if (is_valid(newNode)) {
+            pushBack(list, newNode);
+        } else {
+            free(newNode);
+        }
+    }
+
     return list;
 }
 
