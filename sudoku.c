@@ -118,6 +118,7 @@ Node* DFS(Node* initial, int* cont){
   Stack* stack = createStack();
   if (stack == NULL) {
     if (cont != NULL) *cont = 0;
+    free(initial);
     return NULL;
   }
 
@@ -126,27 +127,35 @@ Node* DFS(Node* initial, int* cont){
 
   Node* current = NULL;
   List* adj = NULL;
-  
+
   while (!is_empty(stack)) {
     current = top(stack);
-    pop(stack);
-    if (is_final(current)) {
-      clean(stack);
-      return current;
-    }
+
     if (cont != NULL) (*cont)++;
+
+    if (is_final(current)) {
+      if (is_valid(current)) {
+        clean(stack);
+        return current;
+      }
+    }
+
     adj = get_adj_nodes(current);
     if (adj == NULL) {
+      pop(stack);
       free(current);
-      continue;
+      return NULL;
     }
-    for (void* it = first(adj); it != NULL; it = next(adj)) {
-      push(stack, it);
-    }
-    clean(adj);
-  } 
 
-  return current;
+    void *it = first(adj);
+    while(it != NULL) {
+      push(stack, it);
+      it = next(adj);
+    }
+
+    free(current);
+    clean(adj);
+    return NULL;
 }
 
 
