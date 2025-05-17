@@ -56,7 +56,7 @@ int is_valid(Node* n){
                 if (fil[i][k] || col[j][k] || subMat[i / 3][j / 3][k]) {
                     return 0;
                 }
-                fil[i][k] = col[j][k] = subMat[i / 3][j / 3][k] = 1; //asigno encadenadamente
+                fil[i][k] = col[j][k] = subMat[i / 3][j / 3][k] = 1; //asigno encadenadamente (me lo recomendo GPT)
             }
         }
     }
